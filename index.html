@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Opinions</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $(function() {
+        $('#submit-button').click(function() {
+          var email = $('#email-input').val();
+          var content = $('#content-input').val();
+          $.ajax({
+            url: '/api/opinions',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({ email: email, content: content }),
+            success: function(data, textStatus, jqXHR) {
+              alert('Opinion submitted successfully');
+              $('#email-input').val('');
+              $('#content-input').val('');
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+              alert('Error submitting opinion: ' + errorThrown);
+            }
+          });
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <h1>Opinions</h1>
+    <form>
+      <label>Email address:</label>
+      <input id="email-input" type="email" required>
+      <br>
+      <label>Your opinion:</label>
+      <textarea id="content-input" required></textarea>
+      <br>
+      <button id="submit-button" type="button">Submit</button>
+    </form>
+  </body>
+</html>
